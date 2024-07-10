@@ -2,7 +2,7 @@
  * @description       :
  * @author            : admillican08@gmail.com
  * @group             :
- * @last modified on  : 07-05-2024
+ * @last modified on  : 07-07-2024
  * @last modified by  : admillican08@gmail.com
  **/
 
@@ -101,6 +101,7 @@ public with sharing class OpportunityHelper {
         SELECT Id, FirstName, AccountId
         FROM Contact
         WHERE AccountId IN :accountIds AND Title = 'CEO'
+        WITH USER_MODE
         ORDER BY FirstName ASC
       ]
     );
@@ -134,6 +135,7 @@ public with sharing class OpportunityHelper {
         WHERE
           Id IN (SELECT AccountId FROM Opportunity WHERE Id IN :oppMap.keySet())
           AND Industry = 'Banking'
+        WITH USER_MODE
       ]
     );
     for (Opportunity opp : oppMap.values()) {
@@ -219,6 +221,7 @@ public with sharing class OpportunityHelper {
       SELECT Id, AccountId
       FROM Contact
       WHERE Title = 'VP Sales' AND AccountId IN :accountIdSet
+      WITH USER_MODE
     ];
     for (Opportunity opp : oppMap.values()) {
       Id acctId = oppIdToAcctIdMap.get(opp.Id);
